@@ -2,25 +2,28 @@
   "name": "operators",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/operators/src",
-  "prefix": "app",
-  "tags": [],
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "project": "packages/operators/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "packages/operators/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "packages/operators/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
+        "outputPath": "dist/packages/operators",
+        "main": "packages/operators/src/index.ts",
+        "tsConfig": "packages/operators/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs operators {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/operators/**/*.ts"]
+      }
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -35,16 +38,7 @@
           "codeCoverage": true
         }
       }
-    },
-    "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/operators/**/*.ts",
-          "packages/operators/**/*.html"
-        ]
-      }
     }
-  }
+  },
+  "tags": []
 }

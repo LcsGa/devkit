@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@lcsga/ng-operators": ["packages/ng-operators/src/index.ts"],
       "@lcsga/operators": ["packages/operators/src/index.ts"]
     }
   },
