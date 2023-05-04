@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@lcsga/ng-operators": ["packages/ng-operators/src/index.ts"],
-      "@lcsga/operators": ["packages/operators/src/index.ts"]
+      "@lcsga/operators": ["packages/operators/src/index.ts"],
+      "@lcsga/zod-operators": ["packages/zod-operators/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

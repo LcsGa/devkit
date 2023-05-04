@@ -1,0 +1,9 @@
+{
+  "name": "@lcsga/zod-operators",
+  "version": "0.1.0",
+  "type": "commonjs",
+  "peerDependencies": {
+    "zod": "^3.21.4",
+    "rxjs": "^7.5.7"
+  }
+}
