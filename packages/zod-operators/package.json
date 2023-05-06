@@ -1,8 +1,8 @@
 {
   "name": "@lcsga/zod-operators",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "type": "commonjs",
-  "description": "Provides custom RxJS operators to enpower the use of zod.js with RxJS",
+  "description": "Provides custom RxJS operators to empower the use of zod.js with RxJS",
   "keywords": [
     "RxJS",
     "Zod",
