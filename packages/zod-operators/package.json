@@ -1,7 +1,19 @@
 {
   "name": "@lcsga/zod-operators",
-  "version": "0.2.0",
+  "version": "0.3.1",
   "type": "commonjs",
+  "description": "Provides custom RxJS operators to enpower the use of zod.js with RxJS",
+  "keywords": [
+    "RxJS",
+    "Zod",
+    "Custom operators"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LcsGa/devkit.git",
+    "directory": "packages/zod-operators"
+  },
+  "license": "MIT",
   "peerDependencies": {
     "zod": "^3.21.4",
     "rxjs": "^7.5.7"
