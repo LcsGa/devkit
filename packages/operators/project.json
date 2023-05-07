@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/operators",
         "main": "packages/operators/src/index.ts",
         "tsConfig": "packages/operators/tsconfig.lib.json",
-        "assets": []
+        "assets": ["packages/operators/*.md"]
       }
     },
     "publish": {
