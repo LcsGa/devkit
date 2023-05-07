@@ -8,10 +8,12 @@
   zodParse<T>(schema: ZodSchema<T>, options?: { strict?: boolean }): MonoTypeOperatorFunction<T>
   ```
 
-  |           |                       |                                                                                                                                                  |
+  | argument  | type                  | description                                                                                                                                      |
   | --------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
   | `schema`  | `ZodSchema<T>`        | The schema to provide for the parsing.<br/>A description can also be provided to improve the debugging by calling the `describe()` method to it. |
   | `options` | `{ strict: boolean }` | Optional. Default is `{}`.<br/>A configuration object to modify the behavior of the operator.                                                    |
+
+  <br/>
 
   #### Example:
 

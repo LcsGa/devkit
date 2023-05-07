@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/zod-operators",
         "main": "packages/zod-operators/src/index.ts",
         "tsConfig": "packages/zod-operators/tsconfig.lib.json",
-        "assets": []
+        "assets": ["packages/zod-operators/*.md"]
       }
     },
     "publish": {

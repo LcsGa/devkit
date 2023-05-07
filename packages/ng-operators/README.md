@@ -2,6 +2,8 @@
 
 ### This package provides a set of custom RxJS operators, used to make declarative pattern easier to set up within an angular app.
 
+<br/>
+
 - [fromChildEvent](./src/lib/from-child-event.ts): This operator is usefull whenever you want to listen to some `@ViewChild` or `@ContentChild` events.
 
   ```ts
@@ -12,11 +14,13 @@
   ): Observable<T>
   ```
 
-  |                 |                             |                                                                                                                         |
+  | argument        | type                        | description                                                                                                             |
   | --------------- | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
   | `childSelector` | `() => ElementRef`          | A callback function used to get the child element to listen an event to.                                                |
   | `type`          | `keyof HTMLElementEventMap` | The type of event to listen.                                                                                            |
   | `options`       | `EventListenerOptions`      | Optional. Default is `{}`.<br/>Options to pass through to the underlying addListener, addEventListener or on functions. |
+
+  <br/>
 
   <details>
   <summary>Why do we need it?</summary>
@@ -115,11 +119,13 @@
   ): Observable<T>
   ```
 
-  |                    |                             |                                                                                                                         |
+  | argument           | type                        | description                                                                                                             |
   | ------------------ | --------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
   | `childrenSelector` | `() => ElementRef`          | A callback function used to get the children elements to listen an event to.                                            |
   | `type`             | `keyof HTMLElementEventMap` | The type of event to listen.                                                                                            |
   | `options`          | `EventListenerOptions`      | Optional. Default is `{}`.<br/>Options to pass through to the underlying addListener, addEventListener or on functions. |
+
+  <br/>
 
   #### Example:
 
