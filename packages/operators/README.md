@@ -89,7 +89,7 @@
 - [debounceMap](./src/lib/debounce-map.ts): It works exactly like `debounceTimeMap` but with a `durationSelector` instead of a `dueTime`!
 
   ```ts
-  debounceTimeMap<TValue, TObservableInput extends ObservableInput<any>>(
+  debounceMap<TValue, TObservableInput extends ObservableInput<any>>(
     project: (value: TValue, index: number) => TObservableInput,
     durationSelector: (value: TValue) => ObservableInput<any>
   ): OperatorFunction<TValue, ObservedValueOf<TObservableInput>>
