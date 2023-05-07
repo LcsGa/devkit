@@ -1,6 +1,6 @@
 # @lcsga/operators
 
-### This package provides a custom RxJS operator, to extend the list of already built-in ones.
+### This package provides a set of custom RxJS operators, to extend the list of already built-in ones.
 
 - [debounceTimeMap](./src/lib/debounce-time-map.ts): This operator extends the familly of of `switchMap`, `mergeMap`, `concatMap` and `exhaustMap`.
 
@@ -83,3 +83,34 @@
   ```
 
   In the example above, if you are unlucky and press another key a little **after 300ms**, after a first request has been sent, the previous request will still be cancelled and you won't face any strange behavior!
+
+<br/>
+
+- [debounceMap](./src/lib/debounce-map.ts): It works exactly like `debounceTimeMap` but with a `durationSelector` instead of a `dueTime`!
+
+  ```ts
+  debounceTimeMap<TValue, TObservableInput extends ObservableInput<any>>(
+    project: (value: TValue, index: number) => TObservableInput,
+    durationSelector: (value: TValue) => ObservableInput<any>
+  ): OperatorFunction<TValue, ObservedValueOf<TObservableInput>>
+  ```
+
+  | argument           | type                                                 | description                                                                                                                                                    |
+  | ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `project`          | `(value: TValue, index: number) => TObservableInput` | A function that, when applied to an item emitted by the source Observable, returns an Observable.                                                              |
+  | `durationSelector` | `(value: TValue) => ObservableInput<any>`            | A function that receives a value from the source Observable, for computing the timeout duration for each source value, returned as an Observable or a Promise. |
+
+  <br/>
+
+  #### Example:
+
+  ```ts
+  fromEvent<GithubUser>(input, 'keydown')
+    .pipe(
+      debounceMap(
+        () => fromFetch('https://api.github.com/users/' + input.value, { selector: (res) => res.json() }),
+        () => timer(300)
+      )
+    )
+    .subscribe(console.log);
+  ```
