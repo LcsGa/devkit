@@ -25,9 +25,9 @@
 
   You made a searchbar and you'd like to send a fetch request, while typing within it.
 
-  To avoid sending many request at the same time (possibly causing an issue, receiving the first response after the second one for example) you would need to cancel the previous one by using a [switchMap](https://rxjs.dev/api/index/function/switchMap).
+  To avoid sending many requests at the same time (possibly causing an issue, receiving the first response after the second one for example) you would need to cancel the previous one by using a [switchMap](https://rxjs.dev/api/index/function/switchMap).
 
-  Another great thing you could and should do is, before sending any request, wait for a certain amount of time. To do so, you could use a [debounceTime](https://rxjs.dev/api/index/function/debounceTime).
+  Another great thing you could and should do is, before sending any request, wait for a certain amount of time with no more input. To do so, you could use a [debounceTime](https://rxjs.dev/api/index/function/debounceTime).
 
   <br/>
 
@@ -52,7 +52,7 @@
 
   What happens if your timing is bad and you press another set of key, with the first one pressed after **301ms**, then the others **under 300ms each**?
 
-  **=> You will never go through the `switchMap`, which means that the previous request won't be cancelled!**
+  **=> You will never go through the `switchMap` for a second time, as you could expect, which means that the previous request won't be canceled!**
 
   <br />
 
@@ -82,7 +82,7 @@
     .subscribe(console.log);
   ```
 
-  In the example above, if you are unlucky and press another key a little **after 300ms**, after a first request has been sent, the previous request will still be cancelled and you won't face any strange behavior!
+  In the example above, if you are unlucky and press another key a little **after 300ms**, after a first request has been sent already, the previous request will still be canceled and you won't face any unexpected behavior!
 
 <br/>
 

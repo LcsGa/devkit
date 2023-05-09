@@ -30,7 +30,7 @@
     .subscribe(console.log);
   ```
 
-  Since the id of a Github user is of type `number` and since the zodParse is not strict by default, the `console.log` will return the object fetched without any parsing and console will send a warning:
+  Since the id of a Github user is of type `number` and since the `zodParse` operator is not strict by default, the `console.log` will return the object fetched without any parsing and the console will print the following warning:
 
   ```
   ZodError: [
@@ -95,4 +95,4 @@
     .subscribe(console.log);
   ```
 
-  The error will be the same as in the warning above we won't receive any data in the `console.log`
+  The error will be the same as in the warning above, but this time we won't receive any data in the `console.log`.
