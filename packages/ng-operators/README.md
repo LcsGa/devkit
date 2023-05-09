@@ -105,7 +105,7 @@
 
   As you can see, `fromChildEvent` takes a selector callback to get the viewChild or contentChild target.
 
-  Since the document's event can only be fired after the dom is rendered, we know that the element packageassed within the selector callback is always available.
+  Since the document's event can only be fired after the dom is rendered, we know that the element passed within the selector callback is always available.
 
 <br/>
 
