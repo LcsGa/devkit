@@ -4,7 +4,7 @@
 
 - ### v2.0.0
   ####
-  `fromChildEvent` and `fromChildrenEvent` must now be used in an injection context (or you can now provide a new buildNotifier if need).
+  `fromChildEvent` and `fromChildrenEvent` must now be used in an injection context (or you can now provide a new `buildNotifier` option if needed).
 
 <br/>
 
