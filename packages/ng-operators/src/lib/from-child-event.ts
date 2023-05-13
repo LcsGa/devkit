@@ -1,10 +1,23 @@
-import { ElementRef } from '@angular/core';
-import { Observable, filter, fromEvent } from 'rxjs';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { ElementRef, NgZone, inject } from '@angular/core';
+import { EMPTY, Observable, ObservableInput, asyncScheduler, from, fromEvent, observeOn, switchMap } from 'rxjs';
 import { EventListenerOptions } from 'rxjs/internal/observable/fromEvent';
 
 export const fromChildEvent = <T extends Event>(
-  childSelector: () => ElementRef,
+  childSelector: () => ElementRef | undefined,
   type: keyof HTMLElementEventMap,
-  options: EventListenerOptions = {}
-): Observable<T> =>
-  fromEvent<T>(document, type, options).pipe(filter(({ target }) => target === childSelector().nativeElement));
+  options: EventListenerOptions & { buildNotifier?: ObservableInput<any> } = {}
+): Observable<T> => {
+  const ngZone = !options.buildNotifier ? inject(NgZone) : undefined;
+
+  return (
+    options.buildNotifier
+      ? from(options.buildNotifier).pipe(observeOn(asyncScheduler))
+      : ngZone?.onMicrotaskEmpty ?? EMPTY
+  ).pipe(
+    switchMap(() => {
+      const child = childSelector()?.nativeElement;
+      return child ? fromEvent<T>(child, type, options) : EMPTY;
+    })
+  );
+};
