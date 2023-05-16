@@ -1,0 +1,26 @@
+{
+  "name": "ng-utils-types",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ng-utils/types/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ng-utils/types",
+        "main": "packages/ng-utils/types/src/index.ts",
+        "tsConfig": "packages/ng-utils/types/tsconfig.lib.json",
+        "assets": ["packages/ng-utils/types/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ng-utils/types/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

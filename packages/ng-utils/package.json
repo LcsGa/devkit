@@ -1,0 +1,24 @@
+{
+  "name": "@lcsga/ng-utils",
+  "version": "0.1.0",
+  "type": "commonjs",
+  "description": "Provides Angular utils",
+  "keywords": [
+    "Angular",
+    "TypeScript",
+    "Types",
+    "Router"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LcsGa/devkit.git",
+    "directory": "packages/ng-utils"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "@angular/router": ">=16.0.0",
+    "rxjs": ">=7.0.0"
+  },
+  "main": "./src/index.js",
+  "types": "./src/index.d.ts"
+}
