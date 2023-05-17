@@ -164,6 +164,39 @@
 
   <br/>
 
+- [fromHostEvent](./src/lib/from-host-event.ts): This operator is usefull as an Rx replacement for `@HostListner`.
+
+  ```ts
+    fromHostEvent<T extends Event>(
+      type: keyof HTMLElementEventMap,
+      options: EventListenerOptions & { host?: ElementRef } = {}
+    ): Observable<T>
+  ```
+
+  | argument  | type                                           | description                                                                                                                                                                                                                 |
+  | --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `type`    | `keyof HTMLElementEventMap`                    | The type of event to listen.                                                                                                                                                                                                |
+  | `options` | `EventListenerOptions & { host?: ElementRef }` | Optional. Default is `{}`.<br/>Options to pass through to the underlying addListener, addEventListener or on functions<br/>`host` is an `ElementRef` to pass whenever the operator is used outside of an injection context. |
+
+  <br/>
+
+  Example:
+
+  ```ts
+  @Component({
+    selector: 'app-root',
+    template: '',
+  })
+  export class AppComponent {
+    constructor() {
+      fromHostEvent('click').subscribe(() => console.log('hello world!'));
+      // on app-root click => Output: hello world!
+    }
+  }
+  ```
+
+  <br/>
+
 - [fromChildOutput](./src/lib/from-child-output.ts): This operator is usefull whenever you want to listen to some `@ViewChild` or `@ContentChild` outputs or observables for a `Component` or a `Directive` instead of an `ElementRef`.
 
   ```ts
@@ -176,11 +209,11 @@
 
   See [PickOutput](./src/lib/utils/pick-output.type.ts)</summary> utility type
 
-  | argument        | type                                                              | description                                                                                                                                                                                                                                                                                                                                                                                                                      |
-  | --------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | `childSelector` | `() => ElementRef`                                                | A callback function used to get the child element to listen an event to.                                                                                                                                                                                                                                                                                                                                                         |
-  | `type`          | `keyof HTMLElementEventMap`                                       | The type of event to listen.                                                                                                                                                                                                                                                                                                                                                                                                     |
-  | `options`       | `EventListenerOptions & { buildNotifier?: ObservableInput<any> }` | Optional. Default is `{}`.<br/>Options to pass through to the underlying addListener, addEventListener or on functions<br/>`buildNotifier` is a notifier to rebuild the inner `fromEvent` based on a custom notifier. It's usefull for an element destruction with an `NgIf` for example, or if it's used outside of an inject context (it uses `NgZone` as a default notifier, until the signal based components get realised). |
+  | argument        | type                                       | description                                                                                                                                                                                                                                                                                                                                     |
+  | --------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `childSelector` | `() => ElementRef`                         | A callback function used to get the child element to listen an event to.                                                                                                                                                                                                                                                                        |
+  | `type`          | `keyof HTMLElementEventMap`                | The type of event to listen.                                                                                                                                                                                                                                                                                                                    |
+  | `options`       | `{ buildNotifier?: ObservableInput<any> }` | Optional. Default is `{}`.<br/>The option `buildNotifier` is a notifier to rebuild the inner `fromEvent` based on a custom notifier. It's usefull for an element destruction with an `NgIf` for example, or if it's used outside of an inject context (it uses `NgZone` as a default notifier, until the signal based components get realised). |
 
   <br/>
 
