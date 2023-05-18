@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElementRef, NgZone, inject } from '@angular/core';
+import { ElementRef, NgZone, assertInInjectionContext, inject } from '@angular/core';
 import { EMPTY, Observable, ObservableInput, asyncScheduler, from, fromEvent, observeOn, switchMap } from 'rxjs';
 import { EventListenerOptions } from 'rxjs/internal/observable/fromEvent';
 
@@ -8,13 +8,16 @@ export const fromChildEvent = <T extends Event>(
   type: keyof HTMLElementEventMap,
   options: EventListenerOptions & { buildNotifier?: ObservableInput<any> } = {}
 ): Observable<T> => {
-  const ngZone = !options.buildNotifier ? inject(NgZone) : undefined;
+  let build$: ObservableInput<any>;
 
-  return (
-    options.buildNotifier
-      ? from(options.buildNotifier).pipe(observeOn(asyncScheduler))
-      : ngZone?.onMicrotaskEmpty ?? EMPTY
-  ).pipe(
+  if (options.buildNotifier) {
+    build$ = from(options.buildNotifier).pipe(observeOn(asyncScheduler));
+  } else {
+    assertInInjectionContext(fromChildEvent);
+    build$ = inject(NgZone).onMicrotaskEmpty;
+  }
+
+  return build$.pipe(
     switchMap(() => {
       const child = childSelector()?.nativeElement;
       return child ? fromEvent<T>(child, type, options) : EMPTY;

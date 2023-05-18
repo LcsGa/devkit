@@ -2,9 +2,10 @@
 
 ## Breaking changes:
 
+- ### v3.0.0
+  - update angular to v16 (will throw a nice error message if it's called without access to `inject`)
 - ### v2.0.0
-  ####
-  `fromChildEvent` and `fromChildrenEvent` must now be used in an injection context (or you can now provide a new `buildNotifier` option if needed).
+  - `fromChildEvent` and `fromChildrenEvent` must now be used in an injection context (or you can now provide a new `buildNotifier` option if needed).
 
 <br/>
 

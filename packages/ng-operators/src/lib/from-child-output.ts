@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { inject, NgZone } from '@angular/core';
+import { assertInInjectionContext, inject, NgZone } from '@angular/core';
 import { ObservableInput, Observable, from, observeOn, asyncScheduler, switchMap, EMPTY } from 'rxjs';
 import { PickOutput } from './utils/pick-output.type';
 
@@ -12,9 +12,16 @@ export const fromChildOutput = <
   outputName: TOutputName,
   { buildNotifier }: { buildNotifier?: ObservableInput<any> } = {}
 ): Observable<TOutput[TOutputName]> => {
-  const ngZone = !buildNotifier ? inject(NgZone) : undefined;
+  let build$: ObservableInput<any>;
 
-  return (buildNotifier ? from(buildNotifier).pipe(observeOn(asyncScheduler)) : ngZone?.onMicrotaskEmpty ?? EMPTY).pipe(
+  if (buildNotifier) {
+    build$ = from(buildNotifier).pipe(observeOn(asyncScheduler));
+  } else {
+    assertInInjectionContext(fromChildOutput);
+    build$ = inject(NgZone).onMicrotaskEmpty;
+  }
+
+  return build$.pipe(
     switchMap(() => {
       const child = childSelector() as unknown as TOutput;
       return child ? (child[outputName] as Observable<TOutput[TOutputName]>) : EMPTY;
