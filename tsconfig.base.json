@@ -16,10 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@lcsga/ng-operators": ["packages/ng-operators/src/index.ts"],
-      "@lcsga/ng-utils": ["packages/ng-utils/src/index.ts"],
+      "@lcsga/ng-utils/types": ["packages/ng-utils/types/src/index.ts"],
       "@lcsga/operators": ["packages/operators/src/index.ts"],
-      "@lcsga/zod-operators": ["packages/zod-operators/src/index.ts"],
-      "ng-utils/types": ["packages/ng-utils/types/src/index.ts"]
+      "@lcsga/zod-operators": ["packages/zod-operators/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -34,6 +34,6 @@ export type ExtractRouteResolve<T extends Route> = T extends infer TRoute
 
 type _ExtractRouteInputs<T extends Route> = ExtractRoutePath<T> & ExtractRouteData<T> & ExtractRouteResolve<T>;
 
-export type ExtractRouterInputs<T extends Route> = {
+export type ExtractRouteInputs<T extends Route> = {
   [Key in keyof _ExtractRouteInputs<T>]: _ExtractRouteInputs<T>[Key];
 };

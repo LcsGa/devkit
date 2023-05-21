@@ -1,1 +1,1 @@
-export * from './lib/router-inputs';
+export * from './lib/route-inputs';
