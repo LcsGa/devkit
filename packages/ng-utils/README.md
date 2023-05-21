@@ -50,10 +50,4 @@
 
   <br/>
 
-  <div style="display: inline-flex; align-items: center; column-gap: 6px; background: #E0F2FB; color: #000; padding: 8px 12px; border-radius: 8px">
-    <div style="display: flex; justify-content: center; align-items: center; width: 12px; height: 12px; border: 3px solid #039AE4; border-radius: 50%">
-      <p style="margin: 0; margin-bottom: -2px; font-weight: 900; color: #039AE4;">i</p>
-    </div>
-
-    <p style="margin: 0;">Since query parameters are not declared in a <strong>Route</strong> we cannot extract them.</p>
-  </div>
+  NB: Since query parameters are not declared in a **Route** we cannot extract them.
