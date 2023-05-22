@@ -1,6 +1,6 @@
 {
   "name": "@lcsga/ng-operators",
-  "version": "3.0.0",
+  "version": "4.0.1",
   "description": "Provides custom RxJS operators to empower the use of Angular with RxJS",
   "keywords": [
     "RxJS",

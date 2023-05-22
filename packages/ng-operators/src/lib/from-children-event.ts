@@ -1,12 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ElementRef, NgZone, assertInInjectionContext, inject } from '@angular/core';
-import { EMPTY, Observable, ObservableInput, asyncScheduler, from, fromEvent, merge, observeOn, switchMap } from 'rxjs';
+import {
+  EMPTY,
+  Observable,
+  ObservableInput,
+  asyncScheduler,
+  from,
+  fromEvent,
+  map,
+  merge,
+  observeOn,
+  switchMap,
+} from 'rxjs';
 
 export const fromChildrenEvent = <T extends Event>(
   childrenSelector: () => ElementRef[] | undefined,
   type: keyof HTMLElementEventMap,
   options: EventListenerOptions & { buildNotifier?: ObservableInput<any> } = {}
-): Observable<T> => {
+): Observable<readonly [event: T, index: number]> => {
   let build$: ObservableInput<any>;
 
   if (options.buildNotifier) {
@@ -20,7 +31,11 @@ export const fromChildrenEvent = <T extends Event>(
     switchMap(() => {
       const children = childrenSelector();
       return children
-        ? merge(...children.map(({ nativeElement }) => fromEvent<T>(nativeElement, type, options)))
+        ? merge(
+            ...children.map(({ nativeElement }, index) =>
+              fromEvent<T>(nativeElement, type, options).pipe(map((event) => [event, index] as const))
+            )
+          )
         : EMPTY;
     })
   );

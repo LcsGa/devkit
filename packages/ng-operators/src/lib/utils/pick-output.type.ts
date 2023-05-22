@@ -6,3 +6,7 @@ export type PickOutput<TComponent extends object> = {
     ? Key
     : never]: TComponent[Key] extends Observable<infer TOutput> ? TOutput : never;
 };
+
+export type PickUnionOutput<TComponents extends object[]> = TComponents extends (infer TComponent extends object)[]
+  ? { [Key in keyof PickOutput<TComponent>]: PickOutput<TComponent>[Key] }
+  : never;
