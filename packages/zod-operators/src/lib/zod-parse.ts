@@ -1,34 +1,31 @@
-import { MonoTypeOperatorFunction, Observable } from 'rxjs';
-import { SafeParseSuccess, ZodSchema } from 'zod';
+import { Observable, OperatorFunction } from 'rxjs';
+import { ZodType, ZodTypeDef } from 'zod';
 
 let zodParseCount = 0;
 
-export const zodParse = <T>(
-  schema: ZodSchema<T>,
+export const zodParse = <TInput, TOutput>(
+  schema: ZodType<TOutput, ZodTypeDef, TInput>,
   options: { strict: boolean } = { strict: false }
-): MonoTypeOperatorFunction<T> => {
+): OperatorFunction<TInput, TOutput> => {
   const zodParseIndex = ++zodParseCount;
 
-  return (source$: Observable<T>) =>
-    new Observable<T>((subscriber) =>
+  return (source$: Observable<TInput>) =>
+    new Observable((subscriber) =>
       source$.subscribe({
         next: (value) => {
+          const description = `${schema.description ?? `Zod parsing #${zodParseIndex}`}`;
           const parsedValue = schema.safeParse(value);
 
-          console.group(schema.description ?? `zodParse#${zodParseIndex}`);
-
           if (parsedValue.success) {
-            subscriber.next((parsedValue as SafeParseSuccess<T>).data);
+            subscriber.next(parsedValue.data);
           } else {
             if (options.strict) {
-              subscriber.error(parsedValue.error);
+              subscriber.error(new Error(`${description}:\n\n${parsedValue.error.message}`));
             } else {
-              console.warn(parsedValue.error);
-              subscriber.next(value);
+              console.warn(`${description}:\n\n`, parsedValue.error);
+              subscriber.next(value as unknown as TOutput);
             }
           }
-
-          console.groupEnd();
         },
         error: (err) => subscriber.error(err),
         complete: () => subscriber.complete(),
