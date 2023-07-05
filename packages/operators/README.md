@@ -121,3 +121,16 @@
   | argument    | type                                   | description                                                                                                                                                                                                                                                                                                                                                                                                                         |
   | ----------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | `predicate` | `(value: T, index: number) => boolean` | A function that evaluates each value emitted by the source Observable.<br />If it returns `true`, the `value` is added to the buffer, if `false` the value is not added and the buffer is emitted to the output Observable, before being reset for the next ongoing values.<br />The `index` parameter is the number `i` for the i-th value already buffered since the begining of the bufferization, starting from the number `0`. |
+
+  <br />
+
+  ### Example:
+
+  ```ts
+  of(1, 2, 3, 4, 5, 6)
+    .pipe(bufferWhile((nb) => nb !== 4))
+    .subscribe(console.log);
+  // Outputs:
+  // [1, 2, 3]
+  // [5, 6]
+  ```
