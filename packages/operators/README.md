@@ -73,12 +73,7 @@
   const input = document.querySelector<HTMLInputElement>('input');
 
   fromEvent<GithubUser>(input, 'keydown')
-    .pipe(
-      debounceTimeMap(
-        () => fromFetch('https://api.github.com/users/' + input.value, { selector: (res) => res.json() }),
-        300
-      )
-    )
+    .pipe(debounceTimeMap(() => fromFetch('https://api.github.com/users/' + input.value, { selector: (res) => res.json() }), 300))
     .subscribe(console.log);
   ```
 
@@ -114,3 +109,15 @@
     )
     .subscribe(console.log);
   ```
+
+  <br/>
+
+  - [bufferWhile](./src/lib/buffer-while.ts): Buffers the source Observable values until the `predicates` turns false.
+
+  ```ts
+  bufferWhile<T>(predicate: (value: T, index: number) => boolean): OperatorFunction<T, T[]>
+  ```
+
+  | argument    | type                                   | description                                                                                                                                                                                                                                                                                                                                                                                                                         |
+  | ----------- | -------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `predicate` | `(value: T, index: number) => boolean` | A function that evaluates each value emitted by the source Observable.<br />If it returns `true`, the `value` is added to the buffer, if `false` the value is not added and the buffer is emitted to the output Observable, before being reset for the next ongoing values.<br />The `index` parameter is the number `i` for the i-th value already buffered since the begining of the bufferization, starting from the number `0`. |
