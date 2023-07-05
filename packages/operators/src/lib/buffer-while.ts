@@ -7,14 +7,20 @@ export function bufferWhile<T>(predicate: (value: T, index: number) => boolean):
   return (source$: Observable<T>) =>
     new Observable((destination) => {
       let buffer: T[] = [];
-      const emitBuffer = () => {
+      let index = 0;
+
+      const emitBuffer = (firstValue?: T) => {
         destination.next(buffer);
-        buffer = [];
+        buffer = firstValue ? [firstValue] : [];
       };
+
       return source$.subscribe({
         next: (value) => {
-          buffer.push(value);
-          if (!predicate(value, buffer.length - 1)) emitBuffer();
+          if (predicate(value, index++)) {
+            buffer.push(value);
+          } else {
+            emitBuffer(value);
+          }
         },
         error: (err) => destination.error(err),
         complete: () => {

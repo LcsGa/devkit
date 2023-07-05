@@ -1,5 +1,18 @@
 # @lcsga/operators
 
+## Breaking changes:
+
+### v3.0.0
+
+- `bufferWhile` now puts the value at the moment when the predicate returns false, as the first element of the incoming new buffer, since _while_ is an exclusive keyword. Also doing so mimics the `takeWhile` operator behavior that is also exclusive.
+- In the `predicate` of `bufferWhile`, `index` now represents the i-th source emission that has happened since the subscription`.
+
+### v2.0.0
+
+- `bufferWhile` now integrates the value at the moment when the predicate returns false, as the last element of the ongoing buffer, to mimic all of the already existing `bufferXxx` operators.
+
+<br />
+
 ### This package provides a set of custom RxJS operators, to extend the list of already built-in ones.
 
 - [debounceTimeMap](./src/lib/debounce-time-map.ts): This operator extends the familly of of `switchMap`, `mergeMap`, `concatMap` and `exhaustMap`.
@@ -118,9 +131,9 @@
   bufferWhile<T>(predicate: (value: T, index: number) => boolean): OperatorFunction<T, T[]>
   ```
 
-  | argument    | type                                   | description                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-  | ----------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | `predicate` | `(value: T, index: number) => boolean` | A function that evaluates each value emitted by the source Observable.<br />Until the predicate returns `false` the buffer is updated with each incomming values. When it returns false the buffer is emitted, with the last value, to the output Observable, before being reset for the next ongoing values.<br />The `index` parameter is the number `i` for the i-th value already buffered since the begining of the bufferization, starting from the number `0`. |
+  | argument    | type                                   | description                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+  | ----------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `predicate` | `(value: T, index: number) => boolean` | A function that evaluates each value emitted by the source Observable.<br />Until the predicate returns `false` the buffer is updated with each incomming values. When it returns false the buffer is emitted, with the last value, to the output Observable, before being reset for the next ongoing values.<br />The `index` parameter is the number `i` for the i-th source emission that has happened since the subscription, starting from the number `0`. |
 
   <br />
 
@@ -131,6 +144,6 @@
     .pipe(bufferWhile((nb) => nb !== 4))
     .subscribe(console.log);
   // Outputs:
-  // [1, 2, 3, 4]
-  // [5, 6]
+  // [1, 2, 3]
+  // [4, 5, 6]
   ```
