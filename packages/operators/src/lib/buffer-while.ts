@@ -13,11 +13,8 @@ export function bufferWhile<T>(predicate: (value: T, index: number) => boolean):
       };
       return source$.subscribe({
         next: (value) => {
-          if (predicate(value, buffer.length)) {
-            buffer.push(value);
-          } else {
-            emitBuffer();
-          }
+          buffer.push(value);
+          if (!predicate(value, buffer.length - 1)) emitBuffer();
         },
         error: (err) => destination.error(err),
         complete: () => {
