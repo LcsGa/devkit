@@ -128,22 +128,31 @@
   - [bufferWhile](./src/lib/buffer-while.ts): Buffers the source Observable values until the `predicates` turns false.
 
   ```ts
-  bufferWhile<T>(predicate: (value: T, index: number) => boolean): OperatorFunction<T, T[]>
+  bufferWhile<T>(predicate: (value: T, index: number) => boolean, inclusive: boolean = false): OperatorFunction<T, T[]>
   ```
 
   | argument    | type                                   | description                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
   | ----------- | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
   | `predicate` | `(value: T, index: number) => boolean` | A function that evaluates each value emitted by the source Observable.<br />Until the predicate returns `false` the buffer is updated with each incomming values. When it returns false the buffer is emitted, with the last value, to the output Observable, before being reset for the next ongoing values.<br />The `index` parameter is the number `i` for the i-th source emission that has happened since the subscription, starting from the number `0`. |
+  | `inclusive` | `boolean`                              | Optional. Default is `false`.<br />When set to true the value that caused `predicate` to return `false` will also be buffered.                                                                                                                                                                                                                                                                                                                                  |
 
   <br />
 
-  ### Example:
+### Example:
 
-  ```ts
-  of(1, 2, 3, 4, 5, 6)
-    .pipe(bufferWhile((nb) => nb !== 4))
-    .subscribe(console.log);
-  // Outputs:
-  // [1, 2, 3]
-  // [4, 5, 6]
-  ```
+```ts
+const source$ = of(1, 2, 3, 4, 5, 6);
+const predicate = (nb) => nb !== 4;
+
+// exclusive (default)
+source$.pipe(bufferWhile(predicate)).subscribe(console.log);
+// Outputs:
+// [1, 2, 3]
+// [4, 5, 6]
+
+// inclusive
+source$.pipe(bufferWhile(predicate, true)).subscribe(console.log);
+// Outputs:
+// [1, 2, 3, 4]
+// [5, 6]
+```

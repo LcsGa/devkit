@@ -1,6 +1,6 @@
 {
   "name": "@lcsga/operators",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "type": "commonjs",
   "description": "Provides custom utility RxJS operators to simplify your codebase",
   "keywords": [
