@@ -18,7 +18,9 @@ describe('debounceTimeMap', () => {
       // then
       const expected = '   ----a-----c|';
       const values = { a: 6, c: 8 };
-      expectObservable(source$.pipe(debounceTimeMap((nb) => of(nb + 5), t))).toBe(expected, values);
+      expectObservable(
+        source$.pipe(debounceTimeMap((nb) => of(nb + 5), t))
+      ).toBe(expected, values);
     });
   });
 });
