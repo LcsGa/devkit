@@ -1,19 +1,10 @@
-import { ElementRef, assertInInjectionContext, inject } from '@angular/core';
+import { ElementRef, assertInInjectionContext, inject, runInInjectionContext } from '@angular/core';
 import { Observable, fromEvent } from 'rxjs';
-import { EventListenerOptions } from 'rxjs/internal/observable/fromEvent';
+import { NgEventListenerOptions } from './types';
 
-export const fromHostEvent = <T extends Event>(
-  type: keyof HTMLElementEventMap,
-  options: EventListenerOptions & { host?: ElementRef } = {}
-): Observable<T> => {
-  let _host: ElementRef;
+export function fromHostEvent<T extends Event>(type: keyof HTMLElementEventMap, options: NgEventListenerOptions = {}): Observable<T> {
+  if (!options.injector) assertInInjectionContext(fromHostEvent);
+  const host = options.injector ? runInInjectionContext(options.injector, () => inject(ElementRef)) : inject(ElementRef);
 
-  if (options.host) {
-    _host = options.host;
-  } else {
-    assertInInjectionContext(fromHostEvent);
-    _host = inject(ElementRef);
-  }
-
-  return fromEvent<T>(_host.nativeElement, type, options);
-};
+  return fromEvent<T>(host.nativeElement, type, options);
+}

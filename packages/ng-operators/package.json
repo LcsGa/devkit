@@ -1,6 +1,6 @@
 {
   "name": "@lcsga/ng-operators",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Provides custom RxJS operators to empower the use of Angular with RxJS",
   "keywords": [
     "RxJS",
@@ -15,8 +15,8 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^16.0.0",
-    "@angular/core": "^16.0.0",
+    "@angular/common": "^16.2.0",
+    "@angular/core": "^16.2.0",
     "rxjs": "^7.0.0"
   },
   "dependencies": {

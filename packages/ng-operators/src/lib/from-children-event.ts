@@ -1,33 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { ElementRef, NgZone, assertInInjectionContext, inject } from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-  ObservableInput,
-  asyncScheduler,
-  from,
-  fromEvent,
-  map,
-  merge,
-  observeOn,
-  switchMap,
-} from 'rxjs';
+import { ElementRef } from '@angular/core';
+import { EMPTY, Observable, fromEvent, map, merge, switchMap } from 'rxjs';
+import { rxAfterRender } from './rx-after-render';
+import { NgEventListenerOptions } from './types';
 
-export const fromChildrenEvent = <T extends Event>(
+export function fromChildrenEvent<T extends Event>(
   childrenSelector: () => ElementRef[] | undefined,
   type: keyof HTMLElementEventMap,
-  options: EventListenerOptions & { buildNotifier?: ObservableInput<any> } = {}
-): Observable<readonly [event: T, index: number]> => {
-  let build$: ObservableInput<any>;
-
-  if (options.buildNotifier) {
-    build$ = from(options.buildNotifier).pipe(observeOn(asyncScheduler));
-  } else {
-    assertInInjectionContext(fromChildrenEvent);
-    build$ = inject(NgZone).onMicrotaskEmpty;
-  }
-
-  return build$.pipe(
+  options: NgEventListenerOptions = {}
+): Observable<readonly [event: T, index: number]> {
+  return rxAfterRender(options.injector).pipe(
     switchMap(() => {
       const children = childrenSelector();
       return children
@@ -39,4 +20,4 @@ export const fromChildrenEvent = <T extends Event>(
         : EMPTY;
     })
   );
-};
+}
