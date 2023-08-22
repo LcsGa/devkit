@@ -1,6 +1,6 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, ViewChild } from '@angular/core';
-import { fromChildEvent, rxAfterNextRender } from '@lcsga/ng-operators';
+import { fromChildEvent, rxAfterNextRender } from '@lcsga/ng-extensions/rxjs';
 import { RxIf } from '@rx-angular/template/if';
 import { RxPush } from '@rx-angular/template/push';
 import { scan, startWith, tap } from 'rxjs';

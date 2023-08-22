@@ -1,0 +1,57 @@
+{
+  "name": "ng-extensions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ng-extensions/src",
+  "prefix": "ngx",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ng-extensions/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ng-extensions/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ng-extensions/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/ng-extensions/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/ng-extensions/**/*.ts",
+          "packages/ng-extensions/**/*.html",
+          "packages/ng-extensions/package.json",
+          "packages/ng-extensions/rxjs/**/*.ts",
+          "packages/ng-extensions/rxjs/**/*.html",
+          "packages/ng-extensions/common/**/*.ts",
+          "packages/ng-extensions/common/**/*.html",
+          "packages/ng-extensions/forms/**/*.ts",
+          "packages/ng-extensions/forms/**/*.html"
+        ]
+      }
+    }
+  }
+}

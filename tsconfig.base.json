@@ -15,8 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@lcsga/ng-operators": ["packages/ng-operators/src/index.ts"],
-      "@lcsga/ng-utils/types": ["packages/ng-utils/types/src/index.ts"],
+      "@lcsga/ng-extensions/common/locales": ["packages/ng-extensions/common/src/locales/index.ts"],
+      "@lcsga/ng-extensions/forms": ["packages/ng-extensions/forms/src/index.ts"],
+      "@lcsga/ng-extensions/rxjs": ["packages/ng-extensions/rxjs/src/index.ts"],
       "@lcsga/operators": ["packages/operators/src/index.ts"],
       "@lcsga/zod-operators": ["packages/zod-operators/src/index.ts"]
     }
