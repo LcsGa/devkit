@@ -1,0 +1,10 @@
+{
+  "name": "@lcsga/ngx-translate-extensions",
+  "version": "0.0.1",
+  "type": "module",
+  "peerDependencies": {
+    "@angular/core": "^16.0.0",
+    "@angular/common": "^16.0.0",
+    "@ngx-translate/core": "^15.0.0"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "ngx-translate-extensions",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ngx-translate-extensions/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ngx-translate-extensions",
+        "main": "packages/ngx-translate-extensions/src/index.ts",
+        "tsConfig": "packages/ngx-translate-extensions/tsconfig.lib.json",
+        "assets": ["packages/ngx-translate-extensions/*.md"]
+      }
+    },
+    "publish": {
+      "command": "node tools/scripts/publish.mjs ngx-translate-extensions {args.ver} {args.tag}",
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ngx-translate-extensions/**/*.ts"]
+      }
+    }
+  },
+  "tags": []
+}

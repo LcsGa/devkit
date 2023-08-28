@@ -10,7 +10,7 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2021", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -18,6 +18,7 @@
       "@lcsga/ng-extensions/common/locales": ["packages/ng-extensions/common/src/locales/index.ts"],
       "@lcsga/ng-extensions/forms": ["packages/ng-extensions/forms/src/index.ts"],
       "@lcsga/ng-extensions/rxjs": ["packages/ng-extensions/rxjs/src/index.ts"],
+      "@lcsga/ngx-translate-extensions": ["packages/ngx-translate-extensions/src/index.ts"],
       "@lcsga/operators": ["packages/operators/src/index.ts"],
       "@lcsga/zod-operators": ["packages/zod-operators/src/index.ts"]
     }
