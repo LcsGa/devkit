@@ -1,6 +1,7 @@
 import { EMPTY, map, merge, Observable, switchMap } from 'rxjs';
 import { rxAfterRender } from './rx-after-render';
-import { InjectorOption, PickUnionOutput } from './types';
+import { InjectorOption } from './types/ng-event-listener-options.type';
+import { PickUnionOutput } from './types/pick-output.type';
 
 export function fromChildrenOutput<
   TChildren extends object[],
@@ -17,7 +18,9 @@ export function fromChildrenOutput<
       return children
         ? merge(
             ...children.map((child, index) =>
-              (child[outputName] as Observable<TUnionOutput[TUnionOutputName]>).pipe(map((output) => [output, index] as const))
+              (child[outputName] as Observable<TUnionOutput[TUnionOutputName]>).pipe(
+                map((output) => [output, index] as const)
+              )
             )
           )
         : EMPTY;

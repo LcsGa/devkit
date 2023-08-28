@@ -1,5 +1,6 @@
-import { catchError, forkJoin, map, mergeAll, Observable, of, reduce } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TranslateLoader } from '@ngx-translate/core';
+import { catchError, forkJoin, map, mergeAll, Observable, of, reduce } from 'rxjs';
 import { TranslateResource } from './translation.type';
 
 export class MultiTranslateLoader implements TranslateLoader {

@@ -1,7 +1,7 @@
 import { ElementRef } from '@angular/core';
 import { EMPTY, Observable, fromEvent, map, switchMap } from 'rxjs';
 import { rxAfterRender } from './rx-after-render';
-import { NgEventListenerOptions } from './types';
+import { NgEventListenerOptions } from './types/ng-event-listener-options.type';
 
 export function fromChildEvent<T extends Event>(
   childSelector: () => ElementRef | undefined,

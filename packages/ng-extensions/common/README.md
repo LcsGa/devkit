@@ -1,3 +1,6 @@
 # ng-extensions/common
 
-Secondary entry point of `ng-extensions`. It can be used by importing from `ng-extensions/common`.
+## Locales
+
+- #### [provideLocale](./src/locales/lib/locale.provider.ts)
+- #### [withCurrency](./src/locales/lib/currency.feature.ts)

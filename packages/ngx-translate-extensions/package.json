@@ -1,6 +1,7 @@
 {
   "name": "@lcsga/ngx-translate-extensions",
-  "version": "0.0.1",
+  "version": "1.0.0-rc.0",
+  "license": "MIT",
   "type": "module",
   "peerDependencies": {
     "@angular/core": "^16.0.0",

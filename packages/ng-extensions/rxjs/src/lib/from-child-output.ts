@@ -1,8 +1,13 @@
 import { EMPTY, Observable, switchMap } from 'rxjs';
 import { rxAfterRender } from './rx-after-render';
-import { InjectorOption, PickOutput } from './types';
+import { InjectorOption } from './types/ng-event-listener-options.type';
+import { PickOutput } from './types/pick-output.type';
 
-export function fromChildOutput<TChild extends object, TOutput extends PickOutput<TChild>, TOutputName extends keyof TOutput>(
+export function fromChildOutput<
+  TChild extends object,
+  TOutput extends PickOutput<TChild>,
+  TOutputName extends keyof TOutput
+>(
   childSelector: () => TChild | undefined,
   outputName: TOutputName,
   options: InjectorOption = {}
