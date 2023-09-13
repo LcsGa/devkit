@@ -1,15 +1,23 @@
 import { Observable, OperatorFunction } from 'rxjs';
 
-export function bufferWhile<T, R extends T>(predicate: (value: T, index: number) => value is R): OperatorFunction<T, R[]>;
+export function bufferWhile<T, R extends T>(
+  predicate: (value: T, index: number) => value is R
+): OperatorFunction<T, R[]>;
 export function bufferWhile<T, R extends T>(
   predicate: (value: T, index: number) => value is R,
   inclusive: boolean
 ): OperatorFunction<T, R[]>;
 export function bufferWhile<T>(predicate: (value: T, index: number) => boolean): OperatorFunction<T, T[]>;
-export function bufferWhile<T>(predicate: (value: T, index: number) => boolean, inclusive: boolean): OperatorFunction<T, T[]>;
+export function bufferWhile<T>(
+  predicate: (value: T, index: number) => boolean,
+  inclusive: boolean
+): OperatorFunction<T, T[]>;
 
-export function bufferWhile<T>(predicate: (value: T, index: number) => boolean, inclusive = false): OperatorFunction<T, T[]> {
-  return (source$: Observable<T>) =>
+export function bufferWhile<T>(
+  predicate: (value: T, index: number) => boolean,
+  inclusive = false
+): OperatorFunction<T, T[]> {
+  return (source: Observable<T>) =>
     new Observable((destination) => {
       let buffer: T[] = [];
       let index = 0;
@@ -19,7 +27,7 @@ export function bufferWhile<T>(predicate: (value: T, index: number) => boolean, 
         buffer = firstValue ? [firstValue] : [];
       };
 
-      return source$.subscribe({
+      return source.subscribe({
         next: (value) => {
           if (predicate(value, index++)) {
             buffer.push(value);

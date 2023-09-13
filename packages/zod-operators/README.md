@@ -5,13 +5,13 @@
 - [zodParse](./src/lib/zod-parse.ts): This operator is usefull to parse zod schemas within an RxJS stream, in order to check types at runtime.
 
   ```ts
-  zodParse<TInput, TOutput>(schema: ZodType<TOutput, ZodTypeDef, TInput>, options?: { strict?: boolean }): OperatorFunction<TInput, TOutput>
+  zodParse<T, R>(schema: ZodType<R, ZodTypeDef, T>, options?: { strict?: boolean }): OperatorFunction<T, R>
   ```
 
-  | argument  | type                                   | description                                                                                                                                      |
-  | --------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-  | `schema`  | `ZodType<TOutput, ZodTypeDef, TInput>` | The schema to provide for the parsing.<br/>A description can also be provided to improve the debugging by calling the `describe()` method to it. |
-  | `options` | `{ strict: boolean }`                  | Optional. Default is `{}`.<br/>A configuration object to modify the behavior of the operator.                                                    |
+  | argument  | type                        | description                                                                                                                                      |
+  | --------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `schema`  | `ZodType<R, ZodTypeDef, T>` | The schema to provide for the parsing.<br/>A description can also be provided to improve the debugging by calling the `describe()` method to it. |
+  | `options` | `{ strict: boolean }`       | Optional. Default is `{}`.<br/>A configuration object to modify the behavior of the operator.                                                    |
 
   <br/>
 

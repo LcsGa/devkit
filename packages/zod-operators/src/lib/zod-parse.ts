@@ -3,15 +3,15 @@ import { ZodType, ZodTypeDef } from 'zod';
 
 let zodParseCount = 0;
 
-export const zodParse = <TInput, TOutput>(
-  schema: ZodType<TOutput, ZodTypeDef, TInput>,
+export function zodParse<T, R>(
+  schema: ZodType<R, ZodTypeDef, T>,
   options: { strict: boolean } = { strict: false }
-): OperatorFunction<TInput, TOutput> => {
+): OperatorFunction<T, R> {
   const zodParseIndex = ++zodParseCount;
 
-  return (source$: Observable<TInput>) =>
+  return (source: Observable<T>) =>
     new Observable((subscriber) =>
-      source$.subscribe({
+      source.subscribe({
         next: (value) => {
           const description = `${schema.description ?? `Zod parsing #${zodParseIndex}`}`;
           const parsedValue = schema.safeParse(value);
@@ -23,7 +23,7 @@ export const zodParse = <TInput, TOutput>(
               subscriber.error(new Error(`${description}:\n\n${parsedValue.error.message}`));
             } else {
               console.warn(`${description}:\n\n`, parsedValue.error);
-              subscriber.next(value as unknown as TOutput);
+              subscriber.next(value as unknown as R);
             }
           }
         },
@@ -31,4 +31,4 @@ export const zodParse = <TInput, TOutput>(
         complete: () => subscriber.complete(),
       })
     );
-};
+}
