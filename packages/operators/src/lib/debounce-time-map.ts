@@ -24,8 +24,9 @@ import { ObservableInput, ObservedValueOf, OperatorFunction, switchMap, timer } 
  * ```
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const debounceTimeMap = <TValue, TObservableInput extends ObservableInput<any>>(
-  project: (value: TValue, index: number) => TObservableInput,
+export function debounceTimeMap<T, R>(
+  project: (value: T, index: number) => ObservableInput<R>,
   dueTime: number
-): OperatorFunction<TValue, ObservedValueOf<TObservableInput>> =>
-  switchMap((value, i) => timer(dueTime).pipe(switchMap(() => project(value, i))));
+): OperatorFunction<T, ObservedValueOf<ObservableInput<R>>> {
+  return switchMap((value, i) => timer(dueTime).pipe(switchMap(() => project(value, i))));
+}

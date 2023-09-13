@@ -18,16 +18,16 @@
 - [debounceTimeMap](./src/lib/debounce-time-map.ts): This operator extends the familly of of `switchMap`, `mergeMap`, `concatMap` and `exhaustMap`.
 
   ```ts
-  debounceTimeMap<TValue, TObservableInput extends ObservableInput<any>>(
-    project: (value: TValue, index: number) => TObservableInput,
+  debounceTimeMap<T, R>(
+    project: (value: T, index: number) => ObservableInput<R>,
     dueTime: number
-  ): OperatorFunction<TValue, ObservedValueOf<TObservableInput>>
+  ): OperatorFunction<T, ObservedValueOf<ObservableInput<R>>>
   ```
 
-  | argument  | type                                                 | description                                                                                                                                            |
-  | --------- | ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-  | `project` | `(value: TValue, index: number) => TObservableInput` | A function that, when applied to an item emitted by the source Observable, returns an Observable.                                                      |
-  | `dueTime` | `number`                                             | The timeout duration in milliseconds, for the window of time required to wait for emission silence before emitting the most recent inner source value. |
+  | argument  | type                                              | description                                                                                                                                            |
+  | --------- | ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+  | `project` | `(value: T, index: number) => ObservableInput<R>` | A function that, when applied to an item emitted by the source Observable, returns an Observable.                                                      |
+  | `dueTime` | `number`                                          | The timeout duration in milliseconds, for the window of time required to wait for emission silence before emitting the most recent inner source value. |
 
   <br/>
 
@@ -86,7 +86,12 @@
   const input = document.querySelector<HTMLInputElement>('input');
 
   fromEvent<GithubUser>(input, 'keydown')
-    .pipe(debounceTimeMap(() => fromFetch('https://api.github.com/users/' + input.value, { selector: (res) => res.json() }), 300))
+    .pipe(
+      debounceTimeMap(
+        () => fromFetch('https://api.github.com/users/' + input.value, { selector: (res) => res.json() }),
+        300
+      )
+    )
     .subscribe(console.log);
   ```
 
@@ -97,16 +102,16 @@
 - [debounceMap](./src/lib/debounce-map.ts): It works exactly like `debounceTimeMap` but with a `durationSelector` instead of a `dueTime`!
 
   ```ts
-  debounceMap<TValue, TObservableInput extends ObservableInput<any>>(
-    project: (value: TValue, index: number) => TObservableInput,
-    durationSelector: (value: TValue) => ObservableInput<any>
-  ): OperatorFunction<TValue, ObservedValueOf<TObservableInput>>
+  debounceMap<T, R>(
+    project: (value: T, index: number) => ObservableInput<R>,
+    durationSelector: (value: T) => ObservableInput<any>
+  ): OperatorFunction<T, ObservedValueOf<ObservableInput<R>>>
   ```
 
-  | argument           | type                                                 | description                                                                                                                                                    |
-  | ------------------ | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | `project`          | `(value: TValue, index: number) => TObservableInput` | A function that, when applied to an item emitted by the source Observable, returns an Observable.                                                              |
-  | `durationSelector` | `(value: TValue) => ObservableInput<any>`            | A function that receives a value from the source Observable, for computing the timeout duration for each source value, returned as an Observable or a Promise. |
+  | argument           | type                                              | description                                                                                                                                                    |
+  | ------------------ | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `project`          | `(value: T, index: number) => ObservableInput<R>` | A function that, when applied to an item emitted by the source Observable, returns an Observable.                                                              |
+  | `durationSelector` | `(value: T) => ObservableInput<any>`              | A function that receives a value from the source Observable, for computing the timeout duration for each source value, returned as an Observable or a Promise. |
 
   <br/>
 
